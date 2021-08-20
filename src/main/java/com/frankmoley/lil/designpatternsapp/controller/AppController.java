@@ -3,7 +3,6 @@ package com.frankmoley.lil.designpatternsapp.controller;
 
 import com.frankmoley.lil.designpatternsapp.factory.Pet;
 import com.frankmoley.lil.designpatternsapp.factory.PetFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,9 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/")
 public class AppController {
 
-    private PetFactory petFactory;
+    private final PetFactory petFactory;
 
-    @Autowired
     public AppController(PetFactory petFactory) {
         this.petFactory = petFactory;
     }

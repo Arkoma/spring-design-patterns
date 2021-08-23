@@ -14,6 +14,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import static junit.framework.Assert.assertNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static junit.framework.TestCase.assertNotNull;
 import static junit.framework.TestCase.assertTrue;
@@ -63,6 +64,18 @@ public class AppControllerIT {
                 .andExpect(jsonPath("$.type").value("DOG"))
                 .andExpect(jsonPath("$.name").value("Fido"))
                 .andExpect(jsonPath("$.hungry").value(false))
+                .andReturn();
+    }
+
+    @Test
+    public void getContactsEndpointReturnsExpectedContacts() throws Exception {
+        this.mockMvc.perform(get("/contacts"))
+                .andExpect(jsonPath("$[0].firstName").value("Bob"))
+                .andExpect(jsonPath("$[0].lastName").value("Builder"))
+                .andExpect(jsonPath("$[0].email").hasJsonPath())
+                .andExpect(jsonPath("$[1].firstName").value("Sue"))
+                .andExpect(jsonPath("$[1].lastName").value("Builder"))
+                .andExpect(jsonPath("$[1].email").hasJsonPath())
                 .andReturn();
     }
 }

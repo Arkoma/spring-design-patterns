@@ -1,5 +1,6 @@
 package com.frankmoley.lil.designpatternsapp.controller;
 
+import com.frankmoley.lil.designpatternsapp.builder.Contact;
 import com.frankmoley.lil.designpatternsapp.factory.Dog;
 import com.frankmoley.lil.designpatternsapp.factory.Pet;
 import com.frankmoley.lil.designpatternsapp.factory.PetFactory;
@@ -9,6 +10,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.util.ArrayList;
+
+import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
@@ -48,5 +52,12 @@ public class AppControllerTest {
         when(mockPetFactory.adoptPet(anyString())).thenReturn(mockDog);
         underTest.adoptPet("", "");
         verify(mockDog, times(1)).feed();
+    }
+
+    @Test
+    public void getContactsUsesContactBuilder() {
+        ArrayList<Contact> result = (ArrayList<Contact>) underTest.getContacts();
+        assertTrue(result.size() > 0);
+        assertEquals("Contact", result.get(0).getClass().getSimpleName());
     }
 }
